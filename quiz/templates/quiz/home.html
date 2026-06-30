@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LearnQuiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card {
+            background: white; border-radius: 20px;
+            padding: 50px; width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .emoji { font-size: 60px; margin-bottom: 10px; }
+        h1 { color: #2d3436; font-size: 32px; margin-bottom: 5px; }
+        p { color: #636e72; margin-bottom: 30px; }
+        input {
+            width: 100%; padding: 15px 20px;
+            border: 2px solid #e0e0e0; border-radius: 12px;
+            font-size: 16px; font-family: 'Poppins', sans-serif;
+            outline: none; transition: 0.3s;
+            margin-bottom: 15px;
+        }
+        input:focus { border-color: #667eea; }
+        button {
+            width: 100%; padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102,126,234,0.4); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="emoji">🧠</div>
+        <h1>LearnQuiz</h1>
+        <p>Upload your notes, we'll create your quiz!</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="player_name" placeholder="Enter your name" required>
+            <button type="submit">Let's Start →</button>
+        </form>
+    </div>
+</body>
+</html>

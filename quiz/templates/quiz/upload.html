@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload File</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif; min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card {
+            background: white; border-radius: 20px;
+            padding: 50px; width: 480px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h2 { color: #2d3436; margin-bottom: 5px; font-size: 26px; }
+        p { color: #636e72; margin-bottom: 25px; font-size: 14px; }
+        .error { background: #ff7675; color: white; padding: 12px; 
+                 border-radius: 10px; margin-bottom: 15px; font-size: 14px; }
+        .upload-area {
+            border: 2px dashed #667eea; border-radius: 12px;
+            padding: 30px; text-align: center; margin-bottom: 20px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .upload-area:hover { background: #f0f0ff; }
+        .upload-area input { display: none; }
+        .upload-area label { cursor: pointer; color: #667eea; font-weight: 600; }
+        .file-name { color: #2d3436; margin-top: 8px; font-size: 13px; }
+        select, input[type=number] {
+            width: 100%; padding: 12px 15px;
+            border: 2px solid #e0e0e0; border-radius: 10px;
+            font-size: 14px; font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px; outline: none;
+        }
+        select:focus, input[type=number]:focus { border-color: #667eea; }
+        label.field-label { color: #2d3436; font-size: 14px; 
+                            font-weight: 600; display: block; margin-bottom: 5px; }
+        button {
+            width: 100%; padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            font-family: 'Poppins', sans-serif; transition: 0.3s;
+        }
+        button:hover { transform: translateY(-2px); }
+        .formats { color: #b2bec3; font-size: 12px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>📂 Upload Your Notes</h2>
+        <p>Supports .txt, .pdf, .docx files</p>
+
+        {% if error %}
+        <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" name="file" 
+                       accept=".txt,.pdf,.docx" required
+                       onchange="showFileName(this)">
+                <div style="font-size:40px">📄</div>
+                <label>Click to choose file</label>
+                <p class="formats">TXT • PDF • DOCX</p>
+                <div class="file-name" id="fileName"></div>
+            </div>
+
+            <label class="field-label">Difficulty Level</label>
+            <select name="difficulty">
+                <option value="easy">🟢 Easy</option>
+                <option value="medium" selected>🟡 Medium</option>
+                <option value="hard">🔴 Hard</option>
+            </select>
+
+            <label class="field-label">Number of Questions</label>
+            <input type="number" name="num_questions" 
+                   value="10" min="5" max="30">
+
+            <button type="submit">Generate Quiz 🚀</button>
+        </form>
+    </div>
+    <script>
+        function showFileName(input) {
+            document.getElementById('fileName').textContent = 
+                '✅ ' + input.files[0].name;
+        }
+    </script>
+</body>
+</html>
